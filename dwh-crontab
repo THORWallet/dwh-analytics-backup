@@ -1,0 +1,2 @@
+0 0 * * * /shell_script_for_application_db_dump.sh >> /var/log/shell_script_for_application_db_dump.log 2>&1
+0 1 * * * /shell_script_for_analytics_db_import.sh >> /var/log/shell_script_for_analytics_db_import.log 2>&1
