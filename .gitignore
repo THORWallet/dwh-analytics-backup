@@ -1,0 +1,5 @@
+# ignore IDE
+.idea
+# ignore logs and data files
+/logs
+/backup-files
