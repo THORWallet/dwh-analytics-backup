@@ -6,6 +6,7 @@
 date_command_location=$(command -v date)
 
 # define starting timestamp
+# shellcheck disable=SC2006
 startedTimestamp=`${date_command_location} +%m-%d-%Y_%H:%M:%S`
 
 # log message
@@ -19,9 +20,11 @@ echo "... Starting to backup transactions data at... $startedTimestamp"
 # define dump file name
 dumpFileName=backup-files/missions-db-tx_statistics-backup.dump
 
+# TODO add correct db connection
 # db connection string for db to be dumped (tw-backend missions-db)
 dbToDumpConnection=postgresql://stage-mainnet-tw-backend-db:7wuBtkwRWuVuzMxE@app-a22cf0e9-f813-45e7-93d9-c7c45a3d494c-do-user-10108618-0.b.db.ondigitalocean.com:25060/stage-mainnet-tw-backend-db?sslmode=require
 
+# TODO add correct db connection
 # db connection string for db to be dumped (tw-backend missions-db)
 dbToRestoreConnection=postgresql://postgres:superuser@localhost:5432/analytics-db
 
@@ -47,7 +50,7 @@ dumpResponse=$(cat logs/dump.log)
 # log message
 echo "... restoring transactions in analytics-db ..."
 
-# before importing data dump tx_statisticts table in analytics-db has to be cleared (truncated)
+# before importing data dump tx_statistics table in analytics-db has to be cleared (truncated)
 psql $dbToRestoreConnection -c 'TRUNCATE tx_statistics'
 
 # restore tx_statistics_table from dump and write
