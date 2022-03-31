@@ -20,11 +20,11 @@ echo "... Starting to backup transactions data at... $startedTimestamp"
 # define dump file name
 dumpFileName=backup-files/missions-db-tx_statistics-backup.dump
 
-# TODO add correct db connection
+# TODO add correct db connection with env variable
 # db connection string for db to be dumped (tw-backend missions-db)
 dbToDumpConnection=
 
-# TODO add correct db connection
+# TODO add correct db connection with env variable
 # db connection string for db to be dumped (tw-backend missions-db)
 dbToRestoreConnection=
 
