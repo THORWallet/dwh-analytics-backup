@@ -22,11 +22,11 @@ dumpFileName=backup-files/missions-db-tx_statistics-backup.dump
 
 # TODO add correct db connection
 # db connection string for db to be dumped (tw-backend missions-db)
-dbToDumpConnection=postgresql://stage-mainnet-tw-backend-db:7wuBtkwRWuVuzMxE@app-a22cf0e9-f813-45e7-93d9-c7c45a3d494c-do-user-10108618-0.b.db.ondigitalocean.com:25060/stage-mainnet-tw-backend-db?sslmode=require
+dbToDumpConnection=
 
 # TODO add correct db connection
 # db connection string for db to be dumped (tw-backend missions-db)
-dbToRestoreConnection=postgresql://postgres:superuser@localhost:5432/analytics-db
+dbToRestoreConnection=
 
 
 # ----------------------------------------------------------------------------------------------------------------------------
