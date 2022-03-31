@@ -51,10 +51,10 @@ dumpResponse=$(cat logs/dump.log)
 echo "... restoring transactions in analytics-db ..."
 
 # before importing data dump tx_statistics table in analytics-db has to be cleared (truncated)
-psql $dbToRestoreConnection -c 'TRUNCATE tx_statistics'
+psql "$dbToRestoreConnection" -c 'TRUNCATE tx_statistics'
 
 # restore tx_statistics_table from dump and write
-pg_restore --data-only -d $dbToRestoreConnection -t tx_statistics  < $dumpFileName 2> logs/restore.log
+pg_restore --data-only -d "$dbToRestoreConnection" -t tx_statistics  < $dumpFileName 2> logs/restore.log
 
 # store error responses of pg_restore in variable for db insert later
 restoreResponse=$(cat logs/restore.log)
@@ -67,7 +67,7 @@ restoreResponse=$(cat logs/restore.log)
 echo "... updating tables in analytics-db ..."
 
 # call add_transactions to add transactions to analytics table
-psql $dbToRestoreConnection -c 'CALL add_analytics_transactions()' 2> logs/procedure-calls.log
+psql "$dbToRestoreConnection" -c 'CALL add_analytics_transactions()' 2> logs/procedure-calls.log
 
 # store error responses of db procedure calls in variable for db insert later
 procedureCallsResponse=$(cat logs/procedure-calls.log)
@@ -83,7 +83,7 @@ finishedTimestamp=$(${date_command_location} +%m-%d-%Y_%H:%M:%S)
 echo "... inserting logs into backup_logs ..."
 
 # insert logs into database
-psql $dbToRestoreConnection -c "INSERT INTO backup_logs (started, finished, dumplogs, restorelogs, procedurecalllogs)
+psql "$dbToRestoreConnection" -c "INSERT INTO backup_logs (started, finished, dumplogs, restorelogs, procedurecalllogs)
                                 Values('$startedTimestamp', '$finishedTimestamp', '$dumpResponse', '$restoreResponse', '$procedureCallsResponse');"
 
 # log message
