@@ -22,11 +22,11 @@ dumpFileName=backup-files/missions-db-tx_statistics-backup.dump
 
 # TODO add correct db connection with env variable
 # db connection string for db to be dumped (tw-backend missions-db)
-dbToDumpConnection=
+dbToDumpConnection=$DB_TO_DUMP_CONNECTION
 
 # TODO add correct db connection with env variable
 # db connection string for db to be dumped (tw-backend missions-db)
-dbToRestoreConnection=
+dbToRestoreConnection=$DB_TO_RESTORE_CONNECTION
 
 
 # ----------------------------------------------------------------------------------------------------------------------------
