@@ -4,28 +4,34 @@
 
 # specify operation system
 FROM ubuntu:latest
-
-
-
 # download package information from all configured sources
 RUN apt-get update
-
-
 
 # ----------------------------------------------------------------------------------------------------------------------------
 # create files and directories needed for backup-script
 # ----------------------------------------------------------------------------------------------------------------------------
 RUN mkdir "logs" "backup-files"
-#RUN touch /backup-files/missions-db-tx_statistics-backup.dump /logs/dump.log /logs/restore.log /logs/procedure-calls.log /logs/cron.log
 RUN touch /logs/cron.log
+
+# ----------------------------------------------------------------------------------------------------------------------------
+# set args from docker-compose and create docker env variables for db connections
+# ----------------------------------------------------------------------------------------------------------------------------
+#ARG db_to_dump_connection_arg
+#ARG db_to_restore_connection_arg
+
+#ENV DB_TO_DUMP_CONNECTION=$db_to_dump_connection_arg
+#ENV DB_TO_RESTORE_CONNECTION=$db_to_restore_connection_arg
+
+
+RUN echo "envs" $DB_TO_DUMP_CONNECTION $DB_TO_RESTORE_CONNECTION
 
 # ----------------------------------------------------------------------------------------------------------------------------
 # create docker env variables for db connections
 # ----------------------------------------------------------------------------------------------------------------------------
-ENV DB_TO_DUMP_CONNECTION=$DB_TO_DUMP_CONNECTION
-ENV DB_TO_RESTORE_CONNECTION=$DB_TO_RESTORE_CONNECTION
+#ENV DB_TO_DUMP_CONNECTION=$DB_TO_DUMP_CONNECTION
+#ENV DB_TO_RESTORE_CONNECTION=$DB_TO_RESTORE_CONNECTION
 
-RUN echo "$DB_TO_DUMP_CONNECTION" "$DB_TO_RESTORE_CONNECTION"
+RUN echo "envs" ${DB_TO_DUMP_CONNECTION} ${DB_TO_RESTORE_CONNECTION}
 
 # ----------------------------------------------------------------------------------------------------------------------------
 # psql setup
@@ -54,12 +60,19 @@ RUN apt-get install cron
 
 # write env variables to file to insert on crontab
 RUN env > /tmp/env.sh
+#RUN echo /tmp/env.sh
+#RUN $DB_TO_DUMP_CONNECTION  > /tmp/env.sh
+#RUN $DB_TO_RESTORE_CONNECTION  >> /tmp/env.sh
+#RUN cat /tmp/env.sh
+
 
 # copy text file with specified crons to the cron.d directory
 COPY backup-crontab /etc/cron.d/backup-crontab
 
 # Chmod 0644: sets permissions--> give execution rights on the cron job (https://chmodcommand.com/chmod-0644/)
 RUN chmod 0644 /etc/cron.d/backup-crontab && crontab /etc/cron.d/backup-crontab
+
+#ENTRYPOINT ["/bin/sh", "-c", "printenv | grep -v \"no_proxy\" >> /etc/environment"]
 
 # Run the command on container startup
 ENTRYPOINT cron && tail -f /logs/cron.log

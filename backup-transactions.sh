@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
-echo "aua"
-echo "$DB_TO_RESTORE_CONNECTION" "$DB_TO_DUMP_CONNECTION"
+echo "print connections"
+echo "$DB_TO_RESTORE_CONNECTION"
+echo "$DB_TO_DUMP_CONNECTION"
+
+
 
 # ----------------------------------------------------------------------------------------------------------------------------
 # script to dump transactions data from missions-db (tw-backend) to analytics-db (analytics-backend)
