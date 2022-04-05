@@ -37,7 +37,7 @@ dumpFileName=/backup-files/missions-db-tx_statistics-backup.dump
 echo "... dumping tx_statistics from missions-db ..."
 
 # dump tx_statistics table from db and write errors in logs
-pg_dump --data-only "$DB_TO_DUMP_CONNECTION" --format=custom --table="tx_statistics"> $dumpFileName  2> /logs/dump.log
+/usr/bin/pg_dump --data-only "$DB_TO_DUMP_CONNECTION" --format=custom --table="tx_statistics"> $dumpFileName  2> /logs/dump.log
 
 # store error responses of pg_dump in variable for db insert later
 dumpResponse=$(cat /logs/dump.log)
@@ -51,10 +51,10 @@ dumpResponse=$(cat /logs/dump.log)
 echo "... restoring transactions in analytics-db ..."
 
 # before importing data dump tx_statistics table in analytics-db has to be cleared (truncated)
-psql "$DB_TO_RESTORE_CONNECTION" -c 'TRUNCATE tx_statistics'
+/usr/bin/psql "$DB_TO_RESTORE_CONNECTION" -c 'TRUNCATE tx_statistics'
 
 # restore tx_statistics_table from dump and write
-pg_restore --data-only -d "$DB_TO_RESTORE_CONNECTION" -t tx_statistics  < $dumpFileName 2> /logs/restore.log
+/usr/bin/pg_restore --data-only -d "$DB_TO_RESTORE_CONNECTION" -t tx_statistics  < $dumpFileName 2> /logs/restore.log
 
 # store error responses of pg_restore in variable for db insert later
 restoreResponse=$(cat /logs/restore.log)
@@ -67,7 +67,7 @@ restoreResponse=$(cat /logs/restore.log)
 echo "... updating tables in analytics-db ..."
 
 # call add_transactions to add transactions to analytics table
-psql "$DB_TO_RESTORE_CONNECTION" -c 'CALL add_analytics_transactions()' 2> /logs/procedure-calls.log
+/usr/bin/psql "$DB_TO_RESTORE_CONNECTION" -c 'CALL add_analytics_transactions()' 2> /logs/procedure-calls.log
 
 # store error responses of db procedure calls in variable for db insert later
 procedureCallsResponse=$(cat /logs/procedure-calls.log)
@@ -83,7 +83,7 @@ finishedTimestamp=$(${date_command_location} +%m-%d-%Y_%H:%M:%S)
 echo "... inserting /logs into backup_logs ..."
 
 # insert logs into database
-psql "$DB_TO_RESTORE_CONNECTION" -c "INSERT INTO backup_logs (started, finished, dumplogs, restorelogs, procedurecalllogs)
+/usr/bin/psql "$DB_TO_RESTORE_CONNECTION" -c "INSERT INTO backup_logs (started, finished, dumplogs, restorelogs, procedurecalllogs)
                                 Values('$startedTimestamp', '$finishedTimestamp', '$dumpResponse', '$restoreResponse', '$procedureCallsResponse');"
 
 # log message
