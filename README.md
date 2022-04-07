@@ -1,5 +1,5 @@
-# THORWallet - Transactions Backup
- This repository contains the configuration for running a cron job to back up the THORWallet backend transaction data and restore them in the analytics backend.
+# THORWallet - Backup of Data for Analytics
+ This repository contains the configuration for running a cron job to back up the THORWallet backend data tables that are used for analytics and restore them in the analytics backend.
 
 
 ## Build and Run Docker Container
