@@ -1,4 +1,3 @@
-# crontab execute script with inserted env variables
-# todo set cron correctly
-* * * * * env - `cat /tmp/env.sh` /bin/sh /backup-transactions.sh > /dev/stdout
+# crontab executes script every day at 2AM with inserted env variables
+* 2 * * * env - `cat /tmp/env.sh` /bin/sh /backup-transactions.sh > /dev/stdout
 # empty line at the end
