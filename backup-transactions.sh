@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+#!/bin/bash
+
 echo "print connections"
 echo "$DB_TO_RESTORE_CONNECTION"
 echo "$DB_TO_DUMP_CONNECTION"
@@ -17,7 +19,7 @@ date_command_location=$(command -v date)
 startedTimestamp=`${date_command_location} +%m-%d-%Y_%H:%M:%S`
 
 # log message
-echo "... Starting to backup transactions data at..."
+echo "... Starting to backup transactions data at ${startedTimestamp} ..."
 
 
 # ----------------------------------------------------------------------------------------------------------------------------
@@ -26,8 +28,6 @@ echo "... Starting to backup transactions data at..."
 
 # define dump file name
 dumpFileName=/backup-files/missions-db-tx_statistics-backup.dump
-
-
 
 # ----------------------------------------------------------------------------------------------------------------------------
 # dump tx_statistics table from STAGE Mainnet tw-backend database

@@ -1,4 +1,4 @@
 # crontab execute script with inserted env variables
 # todo set cron correctly
-* * * * * env - `cat /tmp/env.sh` /bin/sh /backup-transactions.sh >> /logs/cron.log 2>&1
+* * * * * env - `cat /tmp/env.sh` /bin/sh /backup-transactions.sh > /dev/stdout
 # empty line at the end

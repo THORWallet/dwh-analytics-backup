@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  cron-backup-service:
+    image: cron-job-image
+    env_file:
+      - .env
+    volumes:
+      - /logs
+      - /backup-files
+    build:
+      context: .
+      args:
+        - db_dump_arg=${DB_TO_DUMP_CONNECTION}
+        - db_restore_arg={DB_TO_RESTORE_CONNECTION}
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
