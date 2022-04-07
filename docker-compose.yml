@@ -8,11 +8,7 @@ services:
     volumes:
       - /logs
       - /backup-files
-    build:
-      context: .
-      args:
-        - db_dump_arg=${DB_TO_DUMP_CONNECTION}
-        - db_restore_arg={DB_TO_RESTORE_CONNECTION}
+    build: .
     deploy:
       restart_policy:
         condition: on-failure
