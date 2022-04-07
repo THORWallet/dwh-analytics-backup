@@ -1,21 +1,13 @@
 #!/usr/bin/env sh
 #!/bin/bash
 
-echo "env-script"
-
-printenv
-
+# write env vars to file to pass to crontab
 printenv | sed 's/^\(.*\)$/\1/g' > /tmp/env.sh
-#printenv | grep -v "no_proxy" >> /etc/environment
 
-
-
-echo "env.sh"
-cat /tmp/env.sh
-
-#echo "environment"
-#cat /tmp/env.sh
-
-echo "start cron"
-cron -f && tail -f /logs/cron.log
+# check where the date command is located to avoid command not found error
+date_command_location=$(command -v date)
+cronStartTime=$(${date_command_location} +%m-%d-%Y_%H:%M:%S)
+echo "start running cron at ${cronStartTime}:"
+# run cron with output
+crond -f -l 2
 
