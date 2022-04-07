@@ -3,7 +3,7 @@ FROM alpine
 RUN apk update
 RUN apk add --no-cache postgresql-client
 RUN mkdir "logs" "backup-files"
-# copy files and set permissions
+# copy files and set permissions in separate statements to apply to DO dockerbuild kit
 COPY  backup-transactions.sh /
 COPY  env-script.sh /
 COPY  backup-crontab /etc/cron.d/backup-crontab
