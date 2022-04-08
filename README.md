@@ -36,11 +36,13 @@ While connected to the droplet console run
 ```  
 docker compose up --build  
 ```  
-to start the docker container running the backup-cron job (skip the `--build` flag to only run the dockerfile).
+in the folder with the docker-compose file to start the docker container running the backup-cron job (skip the `--build` flag to only run the dockerfile).
 
 To list all the running docker containers in the console use ``docker ps``.
 
+## Docker Volumes
 
+Docker volumes can be found on the host-machine/droplet under `var/lib/docker/volumes`
 
 
 ### Environment Variables

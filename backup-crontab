@@ -1,3 +1,3 @@
-# crontab executes script every day at 2AM with inserted env variables
-*/5 * * * * env - `cat /tmp/env.sh` /bin/sh /backup-transactions.sh
+# crontab executes script every day at 2AM with inserted env variables (write output to both, log file and system out)
+* * * * * env - `cat /tmp/env.sh` /bin/sh /backup-transactions.sh 2>&1 | tee /logs/cron.log
 # empty line at the end
