@@ -1,7 +1,7 @@
 
 # THORWallet - Backup of Data for Analytics
 This repository contains the configuration for running a cron job to back up the THORWallet backend data tables that are used for analytics and restore them in the analytics backend.  
-The backup is running on a digital ocean droplet.
+The backup is running on a Digital Ocean droplet.
 
 ## Prerequisites
 
@@ -36,9 +36,9 @@ While connected to the droplet console run
 ```  
 docker compose up --build  
 ```  
-in the folder with the docker-compose file to start the docker container running the backup-cron job (skip the `--build` flag to only run the dockerfile).
+in the folder with the docker-compose file to start the Docker container running the backup-cron job (skip the `--build` flag to only run the dockerfile).
 
-To list all the running docker containers in the console use ``docker ps``.
+To list all the running Docker containers in the console use ``docker ps``.
 
 In case you want to stop the container running use ``docker stop {CONTAINER_ID}``
 
@@ -49,7 +49,7 @@ They can also be found by using
 
 `docker volume ls`
 
-There should be two docker volumes `backup-files` where the backup dump file is stored and `logs` where the logs are stored.
+There should be two Docker volumes `backup-files` where the backup dump file is stored and `logs` where the logs are stored.
 To inspect a volume use 
 
 `docker volume inspect {volume_name}`
@@ -59,7 +59,7 @@ Note the volume name can be any identifier including numbers and other character
 
 ## Logs
 
-All the logs are stored in the above-mentioned ```logs``` docker volume.
+All the logs are stored in the above-mentioned ```logs``` Docker volume.
 To read the logs use 
 
 `cd var/lib/docker/volumes/dwh-analytics-backup_logs/_data`
