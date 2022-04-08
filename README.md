@@ -5,7 +5,7 @@ The backup is running on a digital ocean droplet.
 
 ## Prerequisites
 
-[Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) & [Docker Compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04) have to be installed on the Digitial Ocean droplet .
+[Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) & [Docker Compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04) have to be installed on the Digitial Ocean droplet.
 
 
 ## SSH Connection
@@ -23,11 +23,11 @@ To transfer the files from this repository to the droplet use the SCP protocol:
 
 `scp -r /path/to/this/repo/ root@159.223.231.26:/path/in/droplet`.
 
-For example use
+Use
 
 ```scp -r  dwh-analytics-backup root@159.223.231.26:```
 
-to copy the folder to the root directory of the droplet.
+to copy the folder to the `root` directory of the droplet.
 
 
 ## Build and Run Docker Container on the Droplet
@@ -42,10 +42,30 @@ To list all the running docker containers in the console use ``docker ps``.
 
 ## Docker Volumes
 
-Docker volumes can be found on the host-machine/droplet under `var/lib/docker/volumes`
+Two Docker volumes are stored on the host-machine/droplet under `var/lib/docker/volumes`
+They can also be found by using 
+
+`docker volume ls`
+
+There should be two docker volumes `backup-files` where the backup dump file is stored and `logs` where the logs are stored.
+To inspect a volume use 
+
+`docker volume inspect {volume_name}`
+
+Note the volume name can be any identifier including numbers and other characters.
 
 
-### Environment Variables
+## Logs
+
+All the logs are stored in the above-mentioned ```logs``` docker volume.
+To read the logs use 
+
+`cd var/lib/docker/volumes/dwh-analytics-backup_logs/_data`
+
+and then `cat` the log file you want to inspect.
+
+
+## Environment Variables
 
 These environment variables are needed in an .env for the backup script to work correctly and establish a connection to the databases.
 
