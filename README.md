@@ -40,6 +40,8 @@ in the folder with the docker-compose file to start the docker container running
 
 To list all the running docker containers in the console use ``docker ps``.
 
+In case you want to stop the container running use ``docker stop {CONTAINER_ID}``
+
 ## Docker Volumes
 
 Two Docker volumes are stored on the host-machine/droplet under `var/lib/docker/volumes`
@@ -63,6 +65,14 @@ To read the logs use
 `cd var/lib/docker/volumes/dwh-analytics-backup_logs/_data`
 
 and then `cat` the log file you want to inspect.
+
+### Docker Container Logs
+
+To see the (live) logs of the running Docker container use 
+
+```docker logs -f {CONTAINER_ID}``` 
+
+You can find the container ID by using `docker ps` again.
 
 
 ## Environment Variables
