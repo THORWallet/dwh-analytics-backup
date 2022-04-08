@@ -11,11 +11,10 @@ The backup is running on a digital ocean droplet.
 ## SSH Connection
 
 For the connection you will need SSH key access that can be handled on Digital Ocean.  
-In your terminal connect the droplet via: 
+
+In your terminal connect to the droplet via: 
 `ssh root@159.223.231.26`
 
-After this you are connected to the droplets Linux console.  
-The ipv4 address of the droplet can also be found on Digital Ocean.  
 Type ``exit`` to exit the droplets console.
 
 
