@@ -14,16 +14,16 @@ dumpFileName=/backup-files/missions-db-tx_statistics-backup.dump
 
 echo "... dumping selected tables from missions-db ..."
 # dump tx_statistics table from db and write errors in logs
-pg_dump --data-only "$DB_TO_DUMP_CONNECTION" --format=custom  --table="tx_statistics" --table="mission_constraints_swap_single" --table="mission_constraints_swap_total" --table="address_rewards" --table="attempts"  --table="mission_rewards" --table="missions"> $dumpFileName  2> /logs/dump.log
+pg_dump --data-only "$DB_TO_DUMP_CONNECTION" --format=custom  --table="tx_statistics" --table="address_watchlist" --table="mission_constraints_swap_single" --table="mission_constraints_swap_total" --table="address_rewards" --table="attempts"  --table="mission_rewards" --table="missions"> $dumpFileName  2> /logs/dump.log
 # store error responses of pg_dump in variable for db insert later
 dumpResponse=$(cat /logs/dump.log)
 
 
 echo "... restoring selected data (tables) in analytics-db ..."
 # before importing data dump tx_statistics table in analytics-db has to be cleared (truncated)
-psql "$DB_TO_RESTORE_CONNECTION" -c 'TRUNCATE tx_statistics, mission_constraints_swap_single, mission_constraints_swap_total, address_rewards, attempts, mission_rewards, missions'
+psql "$DB_TO_RESTORE_CONNECTION" -c 'TRUNCATE tx_statistics, address_watchlist, mission_constraints_swap_single, mission_constraints_swap_total, address_rewards, attempts, mission_rewards, missions'
 # restore tx_statistics_table from dump and write
-pg_restore --data-only -d "$DB_TO_RESTORE_CONNECTION"  --table="tx_statistics" --table="mission_constraints_swap_single" --table="mission_constraints_swap_total" --table="address_rewards" --table="attempts"  --table="mission_rewards" --table="missions"  < $dumpFileName 2> /logs/restore.log
+pg_restore --data-only -d "$DB_TO_RESTORE_CONNECTION"  --table="tx_statistics" --table="address_watchlist" --table="mission_constraints_swap_single" --table="mission_constraints_swap_total" --table="address_rewards" --table="attempts"  --table="mission_rewards" --table="missions"  < $dumpFileName 2> /logs/restore.log
 # store error responses of pg_restore in variable for db insert later
 restoreResponse=$(cat /logs/restore.log)
 
